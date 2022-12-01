@@ -1,7 +1,26 @@
 package websocket
 
 import (
+	"context"
 	"fmt"
+	"os"
+	"time"
+
+	"github.com/go-redis/redis/v8"
+)
+
+func getEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+
+var (
+	RedisLeaderHost = getEnv("REDIS_LEADER_HOST", "localhost")
+	RedisLeaderPort = getEnv("REDIS_LEADER_PORT", "6379")
+	password        = getEnv("REDIS_PASSWORD", "")
 )
 
 type Pool struct {
@@ -19,6 +38,14 @@ func NewPool() *Pool {
 		Broadcast:  make(chan Message),
 	}
 }
+
+var ctx = context.Background()
+
+var rdb = redis.NewClient(&redis.Options{
+	Addr:     RedisLeaderHost + ":" + RedisLeaderPort,
+	Password: password,
+	DB:       0,
+})
 
 func (pool *Pool) Start() {
 	for {
@@ -39,13 +66,13 @@ func (pool *Pool) Start() {
 			}
 			break
 		case message := <-pool.Broadcast:
-			fmt.Println("Sending message to all clients in Pool")
-			for client, _ := range pool.Clients {
-				if err := client.Conn.WriteJSON(message); err != nil {
-					fmt.Println(err)
-					return
-				}
+			currentTime := time.Now()
+			date := currentTime.Format("2006-01-02T15:04:05-0700")
+			err := rdb.Set(ctx, date, message.Body, 0).Err()
+			if err != nil {
+				panic(err)
 			}
+			break
 		}
 	}
 }
