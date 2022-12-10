@@ -1,21 +1,21 @@
 package websocket
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 
 	"github.com/gorilla/websocket"
 )
 
 type Client struct {
-	ID   string
 	Conn *websocket.Conn
 	Pool *Pool
 }
 
 type Message struct {
-	Type int    `json:"type"`
-	Body string `json:"body"`
+	Type    int    `json:"type"`
+	PodName string `json:"podname"`
+	Body    string `json:"body"`
 }
 
 func (c *Client) Read() {
@@ -30,8 +30,15 @@ func (c *Client) Read() {
 			log.Println(err)
 			return
 		}
-		message := Message{Type: messageType, Body: string(p)}
-		c.Pool.Broadcast <- message
-		fmt.Printf("Message Received: %+v\n", message)
+		message := Message{Type: messageType, PodName: c.Pool.PodName, Body: string(p)}
+		payload, err := json.Marshal(message)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		if err := c.Pool.RedisPubSubClient.Publish(c.Pool.Context, "chat-message", payload).Err(); err != nil {
+			log.Println(err)
+			return
+		}
 	}
 }

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: chat-app
-          image: moffyblack/chat-app:1.0.0
+          image: moffyblack/chat-app:1.0.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -27,6 +27,14 @@ spec:
             - name: REDIS_LEADER_HOST
               value: redis-leader
             - name: REDIS_LEADER_PORT
+              value: "6379"
+            - name: REDIS_FOLLOWER_HOST
+              value: redis-follower
+            - name: REDIS_FOLLOWER_PORT
+              value: "6379"
+            - name: REDIS_PUBSUB_HOST
+              value: redis-pubsub
+            - name: REDIS_PUBSUB_PORT
               value: "6379"
             - name: POD_NAME
               valueFrom:

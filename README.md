@@ -8,9 +8,25 @@ k8s の練習プロジェクト。
 
 ```
 minikube start
-kubectl apply -f k8s/go-redis-leader.yml
-kubectl apply -f k8s/go-redis-follower.yml
+kubectl apply -f k8s/chat-redis-leader.yml
+kubectl apply -f k8s/chat-redis-follower.yml
+kubectl apply -f k8s/chat-redis-pubsub.yml
 kubectl apply -f k8s/chat-app.yml
+```
+
+Publish Service
+
+```
+minikube service chat-app-service --url
+```
+
+Cleaning up
+
+```
+kubectl delete deployment -l app=redis
+kubectl delete service -l app=redis
+kubectl delete deployment chat-app
+kubectl delete service chat-app-service
 ```
 
 ### chatjs
@@ -26,6 +42,6 @@ npm start
 ```
 cd chatgo
 docker build -t chat-app .
-docker tag chat-app moffyblack/chat-app:1.0.0
-docker push moffyblack/chat-app:1.0.0
+docker tag chat-app moffyblack/chat-app:1.0.1
+docker push moffyblack/chat-app:1.0.1
 ```
