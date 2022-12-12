@@ -2,46 +2,50 @@
 apiVersion: apps/v1
 kind: Deployment # Type of Kubernetes resource
 metadata:
-  name: chat-app # Unique name of the Kubernetes resource
+  name: user-app # Unique name of the Kubernetes resource
 spec:
-  replicas: 3 # Number of pods to run at any given time
+  replicas: 1 # Number of pods to run at any given time
   selector:
     matchLabels:
-      app: chat-app # This deployment applies to any Pods matching the specified label
+      app: user-app # This deployment applies to any Pods matching the specified label
   template: # This deployment will create a set of pods using the configurations in this template
     metadata:
       labels: # The labels that will be applied to all of the pods in this deployment
-        app: chat-app
+        app: user-app
     spec:
       containers:
-        - name: chat-app
-          image: moffyblack/chat-app:1.0.2
+        - name: user-app
+          image: moffyblack/user-app:1.0.7
           imagePullPolicy: IfNotPresent
           resources:
             requests:
               cpu: 100m
               memory: 100Mi
           ports:
-            - containerPort: 8080 # Should match the port number that the Go application listens on
+            - containerPort: 8000 # Should match the port number that the Go application listens on
           env: # Environment variables passed to the container
-            - name: REDIS_PUBSUB_HOST
-              value: redis-pubsub
-            - name: REDIS_PUBSUB_PORT
-              value: "6379"
+            - name: POSTGRES_IP
+              value: postgres-service
+            - name: VERSION
+              value: 1.0.7
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+
 ---
 apiVersion: v1
 kind: Service # Type of kubernetes resource
 metadata:
-  name: chat-app-service # Unique name of the resource
+  name: user-app-service # Unique name of the resource
 spec:
   type: NodePort # Expose the Pods by opening a port on each Node and proxing it to the service.
   ports: # Take incoming HTTP requests on port 8080 and forward them to the targetPort of 8000
     - name: http
       port: 8080
-      targetPort: 8080
+      targetPort: 8000
   selector:
-    app: chat-app # Map any pod with label `app=chat-app` to this service
+    app: user-app # Map any pod with label `app=user-app` to this service

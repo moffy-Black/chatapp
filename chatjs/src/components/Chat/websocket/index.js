@@ -1,4 +1,6 @@
-var socket = new WebSocket("ws://localhost:8080/ws"); // require minikube service port
+import { Config } from "../../../config/config";
+
+var socket = new WebSocket(`ws://${Config.websocketSource}/ws`); // require minikube service port
 
 let connect = cb => {
   console.log("connecting");
