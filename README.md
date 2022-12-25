@@ -2,6 +2,8 @@
 
 k8s の練習プロジェクト。
 
+![demo](https://user-images.githubusercontent.com/58592807/209473332-d8d3465f-0fe2-4dca-a4ed-39c7e2e02461.gif)
+
 ## Setup
 
 ### minikube
