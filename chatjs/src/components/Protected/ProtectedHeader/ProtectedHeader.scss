@@ -1,0 +1,32 @@
+.protectedHeader {
+  background-color: #15223b;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  color: white;
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .LogOut button {
+    right: 10px;
+    top: 10px;
+    position:fixed;
+    margin: 0 0 0 auto;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+  }
+
+  .LogOut button:hover {
+    background-color: #008CBA;
+    color: black;
+  }
+}

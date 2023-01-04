@@ -22,15 +22,13 @@ type Pool struct {
 
 func NewPool() *Pool {
 	return &Pool{
-		Register:            make(chan *Client),
-		Unregister:          make(chan *Client),
-		Clients:             make(map[*Client]bool),
-		Broadcast:           make(chan Message),
-		Context:             config.CTX,
-		PodName:             config.PodName,
-		RedisLeaderClient:   config.LeaderRDB,
-		RedisFollowerClient: config.FollowerRDB,
-		RedisPubSubClient:   config.PubSubRDB,
+		Register:          make(chan *Client),
+		Unregister:        make(chan *Client),
+		Clients:           make(map[*Client]bool),
+		Broadcast:         make(chan Message),
+		Context:           config.CTX,
+		PodName:           config.PodName,
+		RedisPubSubClient: config.PubSubRDB,
 	}
 }
 

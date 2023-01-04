@@ -1,44 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { connect, sendMsg } from "./api";
-import Header from "./components/Header/Header";
-import ChatHistory from "./components/ChatHistory/index";
-import ChatInput from "./components/ChatInput";
+import Base from "./components/base";
+import Chat from "./components/Chat/Chat";
+import SignupForm from "./components/Signup/SignupForm";
+import SigninForm from "./components/Signin/SigninForm";
+import Protected from "./components/Protected";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chatHistory: []
-    }
-  }
+function App() {
+  return (
+    <Routes>
+      <Route element={<Base />}>
+        <Route path={'/'} element={<SignupForm />} />
+        <Route path={'/signin'} element={<SigninForm />} />
+      </Route>
 
-  componentDidMount() {
-    connect((msg) => {
-      console.log("New Message")
-      this.setState(prevState => ({
-        chatHistory: [...this.state.chatHistory, msg]
-      }))
-      console.log(this.state);
-    });
-  }
-
-  send(event) {
-    if(event.keyCode === 13) {
-      sendMsg(event.target.value);
-      event.target.value = "";
-    }
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <ChatHistory chatHistory={this.state.chatHistory} />
-        <ChatInput send={this.send}/>
-      </div>
-    )
-  }
+      <Route path={'/dashboard'} element={<Protected />} >
+        <Route path={'chat'} element={<Chat />} />
+      </Route >
+    </Routes>
+  )
 }
 
 
