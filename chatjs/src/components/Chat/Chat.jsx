@@ -1,42 +1,39 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { connect, sendMsg } from "./websocket";
 import ChatHistory from "./ChatHistory";
 import ChatInput from "./ChatInput";
 
-class Chat extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chatHistory: []
-    }
-  }
+const Chat = (props) => {
+  const { userInfo } = useAuth();
+  const [chatHistory, setChatHIstory] = useState([])
 
-  componentDidMount() {
+  useEffect(() => {
     connect((msg) => {
       console.log("New Message")
-      this.setState(prevState => ({
-        chatHistory: [...this.state.chatHistory, msg]
-      }))
-      console.log(this.state);
+      setChatHIstory(prevState => (
+        [...prevState, msg]
+      ))
     });
-  }
+  }, []);
 
-  send(event) {
+  const send = (event) => {
     if(event.keyCode === 13) {
-      sendMsg(event.target.value);
+      const msg = {
+        username: userInfo["name"],
+        text: event.target.value
+      }
+      sendMsg(msg);
       event.target.value = "";
     }
   }
 
-  render() {
-    return (
-      <div className="Chat">
-        <ChatHistory handleAuthChange={this.props.handleAuthChange} chatHistory={this.state.chatHistory} />
-        <ChatInput send={this.send}/>
-      </div>
-    )
-  }
+  return (
+    <div className="Chat">
+    <ChatHistory handleAuthChange={props.handleAuthChange} chatHistory={chatHistory} />
+    <ChatInput send={send}/>
+    </div>
+  )
 }
-
 
 export default Chat;

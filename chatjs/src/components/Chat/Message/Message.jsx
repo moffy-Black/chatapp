@@ -11,7 +11,12 @@ class Message extends Component {
   }
 
   render() {
-    return <div className="Message">{this.state.message.body}</div>;
+    return (
+      <div className="MessageArea">
+        <p className="UserName">{this.state.message.body.username}</p>
+        <div className="Message">{this.state.message.body.text}</div>
+      </div>
+    )
   }
 }
 

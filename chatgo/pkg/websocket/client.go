@@ -13,9 +13,13 @@ type Client struct {
 }
 
 type Message struct {
-	Type    int    `json:"type"`
-	PodName string `json:"podname"`
-	Body    string `json:"body"`
+	PodName string      `json:"podname"`
+	Body    MessageBody `json:"body"`
+}
+
+type MessageBody struct {
+	UserName string `json:"username"`
+	Text     string `json:"text"`
 }
 
 func (c *Client) Read() {
@@ -25,12 +29,13 @@ func (c *Client) Read() {
 	}()
 
 	for {
-		messageType, p, err := c.Conn.ReadMessage()
+		var msgBody MessageBody
+		err := c.Conn.ReadJSON(&msgBody)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		message := Message{Type: messageType, PodName: c.Pool.PodName, Body: string(p)}
+		message := Message{PodName: c.Pool.PodName, Body: msgBody}
 		payload, err := json.Marshal(message)
 		if err != nil {
 			log.Println(err)

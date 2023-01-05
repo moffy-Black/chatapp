@@ -1,7 +1,7 @@
 .Message {
   display: block;
   background-color: white;
-  margin: 10px auto;
+  margin: 5px auto 10px;
   box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
   border-radius: 5px;
@@ -12,4 +12,8 @@
     float: right;
     background-color: #328ec4;
   }
+}
+
+.UserName {
+  margin-bottom: 0;
 }

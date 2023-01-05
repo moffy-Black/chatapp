@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: chat-app
-          image: moffyblack/chat-app:1.0.2
+          image: moffyblack/chat-app:1.0.3
           imagePullPolicy: IfNotPresent
           resources:
             requests:
