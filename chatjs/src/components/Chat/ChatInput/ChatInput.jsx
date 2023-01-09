@@ -1,20 +1,39 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import "./ChatInput.scss";
 import MicIcon from "../../Icon/Mic";
 
 const ChatInput = (props) => {
   const [chat, setChat] = useState("")
   const [isMic, setIsMic] = useState(false)
+  const { interimTranscript, finalTranscript, resetTranscript } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (interimTranscript !== '') {
+      setChat(interimTranscript);
+    }
+  }, [interimTranscript]);
+
+  useEffect(() => {
+    if (finalTranscript !== '') {
+      setChat(finalTranscript);
+      props.send(finalTranscript);
+    }
+    resetTranscript();
+  }, [finalTranscript]);
 
   const onMic = () => {
     setChat("");
+    SpeechRecognition.startListening({ language: 'ja-JP', continuous:true });
     console.log("onMic");
     setIsMic(!isMic);
   }
 
   const offMic = () => {
     setChat("");
+    SpeechRecognition.abortListening();
+    resetTranscript();
     console.log("offMic");
     setIsMic(!isMic);
   }
