@@ -2,19 +2,21 @@
   background-color: #15223b;
   width: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 10px 0px;
+  display: flex;
+  position: fixed;
   color: white;
 
   h2 {
-    margin: 0;
+    margin: 0px 0px 0px 10px;
     padding: 0;
   }
 
+  .LogOut{
+    margin-left: auto;
+  }
+
   .LogOut button {
-    right: 10px;
-    top: 10px;
-    position:fixed;
-    margin: 0 0 0 auto;
     padding: 5px 10px;
     border-radius: 8px;
     background-color: #008CBA;
@@ -27,6 +29,6 @@
 
   .LogOut button:hover {
     background-color: #008CBA;
-    color: black;
+    color: #01579B;
   }
 }

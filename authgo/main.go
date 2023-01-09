@@ -30,7 +30,7 @@ func main() {
 	router := gin.Default()
 	router.Use(errorMiddleware())
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{config.FrontAppSource}
+	corsConfig.AllowOrigins = []string{config.FrontAppSource, config.MobileAppSource}
 	router.Use(cors.New(corsConfig))
 	router.GET("/", index(config.Version, config.PodName))
 	router.POST("/signin", signIn(db))

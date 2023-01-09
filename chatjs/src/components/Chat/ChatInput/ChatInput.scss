@@ -1,15 +1,29 @@
 .ChatInput {
   width: 95%;
-  display: block;
   margin: auto;
 
-  input {
+  button {
+    background-color: #008CBA;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+    width: 42px;
+  }
+
+  .chatKapsel {
+    width: 100%;
+    display: flex;
+  }
+
+  .chat {
     padding: 10px;
     margin: 0;
     font-size: 16px;
+    background-color: white;
     border: none;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 20px;
     width: 98%;
     box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
   }

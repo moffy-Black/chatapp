@@ -17,7 +17,8 @@ var (
 	dbName     = getEnv("POSTGRES_DB_NAME", "chatuser")
 	DbSource   = "postgresql://" + dbUser + ":" + dbPassword + "@" + dbIp + ":" + dbPort + "/" + dbName + "?sslmode=disable"
 
-	FrontAppSource = getEnv("FRONT_APP_SOURCE", "http://localhost:3000")
+	FrontAppSource  = getEnv("FRONT_APP_SOURCE", "http://localhost:3000")
+	MobileAppSource = getEnv("Mobile_APP_SOURCE", "http://kokinomacbook-air.local:3000")
 )
 
 func getEnv(key, defaultValue string) string {

@@ -6,26 +6,23 @@ import ChatInput from "./ChatInput";
 
 const Chat = (props) => {
   const { userInfo } = useAuth();
-  const [chatHistory, setChatHIstory] = useState([])
+  const [chatHistory, setChatHistory] = useState([])
 
   useEffect(() => {
     connect((msg) => {
       console.log("New Message")
-      setChatHIstory(prevState => (
+      setChatHistory(prevState => (
         [...prevState, msg]
       ))
     });
   }, []);
 
-  const send = (event) => {
-    if(event.keyCode === 13) {
-      const msg = {
-        username: userInfo["name"],
-        text: event.target.value
-      }
-      sendMsg(msg);
-      event.target.value = "";
+  const send = (text) => {
+    const msg = {
+      username: userInfo["name"],
+      text: text
     }
+    sendMsg(msg);
   }
 
   return (
