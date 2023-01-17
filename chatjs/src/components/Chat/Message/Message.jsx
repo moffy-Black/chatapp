@@ -14,7 +14,7 @@ class Message extends Component {
     return (
       <div className="MessageArea">
         <p className="UserName">{this.state.message.body.username}</p>
-        <div className="Message">{this.state.message.body.text}</div>
+        <p className="Message">{this.state.message.body.text}</p>
       </div>
     )
   }

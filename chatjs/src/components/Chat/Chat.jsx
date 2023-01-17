@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { connect, sendMsg } from "./websocket";
 import ChatHistory from "./ChatHistory";
@@ -6,6 +6,7 @@ import ChatInput from "./ChatInput";
 
 const Chat = (props) => {
   const { userInfo } = useAuth();
+  const scrollBottomRef = useRef(null);
   const [chatHistory, setChatHistory] = useState([])
 
   useEffect(() => {
@@ -16,6 +17,11 @@ const Chat = (props) => {
       ))
     });
   }, []);
+
+  useEffect(() => {
+    scrollBottomRef.current.scrollIntoView();
+    console.log("scroll")
+  }, [chatHistory])
 
   const send = (text) => {
     const msg = {
@@ -29,6 +35,7 @@ const Chat = (props) => {
     <div className="Chat">
     <ChatHistory handleAuthChange={props.handleAuthChange} chatHistory={chatHistory} />
     <ChatInput send={send}/>
+    <div ref={scrollBottomRef}/>
     </div>
   )
 }

@@ -54,8 +54,9 @@ const ChatInput = (props) => {
               }
             }
             onKeyDown={(event) => {
-              if ((event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey) || (event.key === "Enter")) {
+              if (event.key === "Enter" && event.ctrlKey) {
                 props.send(chat)
+                event.target.value=""
               }
             }}
           />
