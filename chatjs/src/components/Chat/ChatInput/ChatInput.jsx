@@ -21,7 +21,7 @@ const ChatInput = (props) => {
       props.send(finalTranscript);
     }
     resetTranscript();
-  }, [finalTranscript]);
+  }, [finalTranscript, props, resetTranscript]);
 
   const onMic = () => {
     setChat("");
