@@ -8,19 +8,19 @@ build
 mac
 
 ```
-docker build -t moffyblack/chat-js:1.0.4 .
+docker build -t moffyblack/chat-js:1.0.2 .
 ```
 
 linux
 
 ```
-docker buildx build --platform linux/amd64 -t moffyblack/chat-js:1.0.4 .
+docker buildx build --platform linux/amd64 -t moffyblack/chat-js:1.0.2 .
 ```
 
 run
 
 ```
-docker run -p 3000:3000 --rm moffyblack/chat-js:1.0.4
+docker run -p 3000:3000 --rm moffyblack/chat-js:1.0.2
 ```
 
 ## Reference

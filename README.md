@@ -62,18 +62,7 @@ kubectl delete ingress chatapp-ingress
 ### chatjs
 
 ```
-cd chatjs
-npm i
-npm start
-```
-
-### chatgo
-
-```
-cd chatgo
-docker build -t chat-app .
-docker tag chat-app moffyblack/chat-app:1.0.1
-docker push moffyblack/chat-app:1.0.1
+docker run -p 3000:3000 --rm moffyblack/chat-js:1.0.2
 ```
 
 ## log

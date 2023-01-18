@@ -2,6 +2,14 @@
 
 User のデータを管理する postgres とやりとりする Restful API server
 
+## local
+
+postgers サービスを立ち上げた後
+
+```
+go run main.go
+```
+
 ## docker
 
 ### go
